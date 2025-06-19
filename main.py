@@ -6,6 +6,7 @@ from imutils import face_utils
 import time
 import os
 import sys
+import pyautogui
 
 # === Path to shape predictor model ===
 model_path = 'shape_predictor_68_face_landmarks.dat'
@@ -25,7 +26,7 @@ def calculate_EAR(eye):
 # === Constants ===
 blink_thresh = 0.20
 blink_duration_thresh = 0.3  # seconds
-double_blink_gap = 0.5         # seconds
+double_blink_gap = 1         # seconds
 
 # === Eye landmark indexes ===
 (L_start, L_end) = face_utils.FACIAL_LANDMARKS_IDXS["left_eye"]
@@ -81,6 +82,8 @@ while True:
                     if pending_single and (current_time - pending_time <= double_blink_gap):
                         cv2.putText(frame, "Double Long Blink → Previous Page", (10, 90),
                                     cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 0, 255), 2)
+                        print("Double Long Blink")
+                        pyautogui.press('left')
                         pending_single = False
                         pending_time = 0
                     else:
@@ -90,9 +93,10 @@ while True:
 
         # If a pending single blink has waited too long, trigger it now
         if pending_single and (current_time - pending_time > double_blink_gap):
-            cv2.putText(frame, "Long Blink → Next Page", (10, 90),
+            cv2.putText(frame, "Single Long Blink → Next Page", (10, 90),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
-            print("Long Blink")
+            print("Single Long Blink")
+            pyautogui.press('right')
             pending_single = False
 
         # === EAR Debug Info ===
