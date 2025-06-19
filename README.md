@@ -28,6 +28,14 @@ Install dependencies using pip:
 pip install -r requirements.txt
 ```
 
+https://github.com/sachadee/Dlib/blob/main/dlib-19.22.99-cp310-cp310-win_amd64.whl
+
+in case dlib install fails, manually download wheel while and 
+
+```bash
+pip install -m '<whl_file_address>'
+```
+
 **Required Files:**
 
 * `shape_predictor_68_face_landmarks.dat`
